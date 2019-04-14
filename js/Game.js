@@ -145,4 +145,15 @@ class Game {
     }
   }
 
+
+ /** 
+ * Displays game over message.
+ * @param {string} message - Game over message.      
+ */
+  gameOver(message) {
+    const messageContainer = document.getElementById('game-over');
+    messageContainer.textContent = message;
+    messageContainer.style.display = 'block';
+  }
+
 }
