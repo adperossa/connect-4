@@ -95,7 +95,7 @@ class Game {
         spaces[targetCol][y + 1].owner === owner &&
         spaces[targetCol][y + 2].owner === owner &&
         spaces[targetCol][y + 3].owner === owner) {
-          win = true;
+        win = true;
       }
     }
 
@@ -105,7 +105,7 @@ class Game {
         spaces[x + 1][targetRow].owner === owner &&
         spaces[x + 2][targetRow].owner === owner &&
         spaces[x + 3][targetRow].owner === owner) {
-          win = true;
+        win = true;
       }
 
     }
@@ -117,7 +117,7 @@ class Game {
           spaces[targetCol + 1][y + 1].owner === owner &&
           spaces[targetCol + 2][y + 2].owner === owner &&
           spaces[targetCol + 3][y + 3].owner === owner) {
-            win = true;
+          win = true;
         }
       }
     }
@@ -129,15 +129,20 @@ class Game {
           spaces[targetCol - 1][y + 1].owner === owner &&
           spaces[targetCol - 2][y + 2].owner === owner &&
           spaces[targetCol - 3][y + 3].owner === owner) {
-            win = true;
+          win = true;
         }
       }
     }
+  }
 
 
-
-
-
+  /** 
+  * Switches active player. 
+  */
+  switchPlayers() {
+    for (const player of this.players) {
+      player.active = !player.active;
+    }
   }
 
 }
