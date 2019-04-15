@@ -59,6 +59,7 @@ class Game {
     let spaces = this.board.spaces;
     let activeToken = this.activePlayer.activeToken;
     let targetColumn = spaces[activeToken.columnLocation];
+    let game = this;
 
     const lastRow = this.board.rows - 1
 
@@ -68,7 +69,9 @@ class Game {
 
       if (space.token === null) {
         this.ready = false;
-        this.activePlayer.activeToken.drop(space);
+        this.activePlayer.activeToken.drop(space, function () {
+          game.updateGameState(activeToken, space);
+        });
       }
 
     }
@@ -133,6 +136,8 @@ class Game {
         }
       }
     }
+
+    return win;
   }
 
 
@@ -146,14 +151,39 @@ class Game {
   }
 
 
- /** 
- * Displays game over message.
- * @param {string} message - Game over message.      
- */
+  /** 
+  * Displays game over message.
+  * @param {string} message - Game over message.      
+  */
   gameOver(message) {
     const messageContainer = document.getElementById('game-over');
     messageContainer.textContent = message;
     messageContainer.style.display = 'block';
+  }
+
+
+  /** 
+   * Updates game state after token is dropped. 
+  * @param   {Object}  token  -  The token that's being dropped.
+  * @param   {Object}  target -  Targeted space for dropped token.
+  */
+  updateGameState(token, target) {
+    target.mark(token);
+
+    if (this.checkForWin(target)) {
+      this.gameOver(`${token.owner.name} wins!`);
+    } else {
+      this.switchPlayers();
+    }
+
+    if (this.activePlayer.hasMoreTokens()) {
+      this.activePlayer.activeToken.drawHTMLToken();
+      this.ready = true;
+    } else {
+      this.gameOver(`It's a draw!`);
+    }
+
+
   }
 
 }
