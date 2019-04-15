@@ -45,7 +45,7 @@ class Player {
  * @return {Boolean} 
  */
   hasMoreTokens() {
-    (this.unusedTokens.length === 0) ? false : true;
+    return this.unusedTokens.length == 0 ? false : true;
   }
 
 

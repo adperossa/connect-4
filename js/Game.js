@@ -59,7 +59,7 @@ class Game {
     let spaces = this.board.spaces;
     let activeToken = this.activePlayer.activeToken;
     let targetColumn = spaces[activeToken.columnLocation];
-   
+
     const lastRow = this.board.rows - 1
 
     for (let row = lastRow; row >= 0; row--) {
@@ -71,6 +71,7 @@ class Game {
         activeToken.drop(space, () => {
           this.updateGameState(activeToken, space);
         });
+        break;
       }
 
     }
@@ -89,7 +90,7 @@ class Game {
     const targetCol = target.x;
     const targetRow = target.y;
     const spaces = this.board.spaces;
-    const win = false;
+    let win = false;
 
     //vertical check, only in the same column where the last token was dropped
     for (let y = 0; y < rows - 3; y++) {
@@ -112,25 +113,25 @@ class Game {
 
     }
 
-    //diagonal upwards check
-    if (targetCol < cols - 3) {
-      for (let y = targetRow; y >= rows - 3; y--) {
-        if (spaces[targetCol][y].owner === owner &&
-          spaces[targetCol + 1][y + 1].owner === owner &&
-          spaces[targetCol + 2][y + 2].owner === owner &&
-          spaces[targetCol + 3][y + 3].owner === owner) {
+    // diagonal downwards
+    for (let x = 3; x < this.board.columns; x++) {
+      for (let y = 0; y < this.board.rows - 3; y++) {
+        if (this.board.spaces[x][y].owner === owner &&
+          this.board.spaces[x - 1][y + 1].owner === owner &&
+          this.board.spaces[x - 2][y + 2].owner === owner &&
+          this.board.spaces[x - 3][y + 3].owner === owner) {
           win = true;
         }
       }
     }
 
-    //diagonal downwards check
-    if (targetCol > 2) {
-      for (let y = targetRow; y < rows - 3; y++) {
-        if (spaces[targetCol][y].owner === owner &&
-          spaces[targetCol - 1][y + 1].owner === owner &&
-          spaces[targetCol - 2][y + 2].owner === owner &&
-          spaces[targetCol - 3][y + 3].owner === owner) {
+    // diagonal upwards
+    for (let x = 3; x < this.board.columns; x++) {
+      for (let y = 3; y < this.board.rows; y++) {
+        if (this.board.spaces[x][y].owner === owner &&
+          this.board.spaces[x - 1][y - 1].owner === owner &&
+          this.board.spaces[x - 2][y - 2].owner === owner &&
+          this.board.spaces[x - 3][y - 3].owner === owner) {
           win = true;
         }
       }
@@ -138,6 +139,131 @@ class Game {
 
     return win;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // checkForWin(target) {
+  //   const owner = target.token.owner;
+  //   let win = false;
+
+  //   // vertical
+  //   for (let x = 0; x < this.board.columns; x++) {
+  //     for (let y = 0; y < this.board.rows - 3; y++) {
+  //       if (this.board.spaces[x][y].owner === owner &&
+  //         this.board.spaces[x][y + 1].owner === owner &&
+  //         this.board.spaces[x][y + 2].owner === owner &&
+  //         this.board.spaces[x][y + 3].owner === owner) {
+  //         win = true;
+  //       }
+  //     }
+  //   }
+
+  //   // horizontal
+  //   for (let x = 0; x < this.board.columns - 3; x++) {
+  //     for (let y = 0; y < this.board.rows; y++) {
+  //       if (this.board.spaces[x][y].owner === owner &&
+  //         this.board.spaces[x + 1][y].owner === owner &&
+  //         this.board.spaces[x + 2][y].owner === owner &&
+  //         this.board.spaces[x + 3][y].owner === owner) {
+  //         win = true;
+  //       }
+  //     }
+  //   }
+
+  //   // diagonal
+  //   for (let x = 3; x < this.board.columns; x++) {
+  //     for (let y = 0; y < this.board.rows - 3; y++) {
+  //       if (this.board.spaces[x][y].owner === owner &&
+  //         this.board.spaces[x - 1][y + 1].owner === owner &&
+  //         this.board.spaces[x - 2][y + 2].owner === owner &&
+  //         this.board.spaces[x - 3][y + 3].owner === owner) {
+  //         win = true;
+  //       }
+  //     }
+  //   }
+
+  //   // diagonal
+  //   for (let x = 3; x < this.board.columns; x++) {
+  //     for (let y = 3; y < this.board.rows; y++) {
+  //       if (this.board.spaces[x][y].owner === owner &&
+  //         this.board.spaces[x - 1][y - 1].owner === owner &&
+  //         this.board.spaces[x - 2][y - 2].owner === owner &&
+  //         this.board.spaces[x - 3][y - 3].owner === owner) {
+  //         win = true;
+  //       }
+  //     }
+  //   }
+
+  //   return win;
+  // }
+
+
+  // checkForWin(target) {
+  //   const owner = target.owner;
+  //   const rows = this.board.rows;
+  //   const cols = this.board.columns;
+  //   const targetCol = target.x;
+  //   const targetRow = target.y;
+  //   const spaces = this.board.spaces;
+  //   let win = false;
+
+  //   //vertical check, only in the same column where the last token was dropped
+  //   for (let y = 0; y < rows - 3; y++) {
+  //     if (spaces[targetCol][y].owner === owner &&
+  //       spaces[targetCol][y + 1].owner === owner &&
+  //       spaces[targetCol][y + 2].owner === owner &&
+  //       spaces[targetCol][y + 3].owner === owner) {
+  //       win = true;
+  //     }
+  //   }
+
+  //   //horizontal check, only in the same row where the last token was dropped
+  //   for (let x = 0; x < cols - 3; x++) {
+  //     if (spaces[x][targetRow].owner === owner &&
+  //       spaces[x + 1][targetRow].owner === owner &&
+  //       spaces[x + 2][targetRow].owner === owner &&
+  //       spaces[x + 3][targetRow].owner === owner) {
+  //       win = true;
+  //     }
+
+  //   }
+
+  //   //diagonal upwards check
+  //   if (targetCol < cols - 3) {
+  //     for (let y = targetRow; y >= rows - 3; y--) {
+  //       if (spaces[targetCol][y].owner === owner &&
+  //         spaces[targetCol + 1][y - 1].owner === owner &&
+  //         spaces[targetCol + 2][y - 2].owner === owner &&
+  //         spaces[targetCol + 3][y - 3].owner === owner) {
+  //         win = true;
+  //       }
+  //     }
+  //   }
+
+  //   //diagonal downwards check
+  //   if (targetCol > 2) {
+  //     for (let y = targetRow; y < rows - 3; y++) {
+  //       if (spaces[targetCol][y].owner === owner &&
+  //         spaces[targetCol - 1][y + 1].owner === owner &&
+  //         spaces[targetCol - 2][y + 2].owner === owner &&
+  //         spaces[targetCol - 3][y + 3].owner === owner) {
+  //         win = true;
+  //       }
+  //     }
+  //   }
+
+  //   return win;
+  // }
 
 
   /** 
@@ -169,18 +295,21 @@ class Game {
   updateGameState(token, target) {
     target.mark(token);
 
-    if (this.checkForWin(target)) {
-      this.gameOver(`${token.owner.name} wins!`);
-    } else {
+    if (!this.checkForWin(target)) {
+
       this.switchPlayers();
+
+      if (this.activePlayer.hasMoreTokens()) {
+        this.activePlayer.activeToken.drawHTMLToken();
+        this.ready = true;
+      } else {
+        this.gameOver(`It's a draw!`);
+      }
+    } else {
+      this.gameOver(`${target.owner.name} wins!`);
     }
 
-    if (this.activePlayer.hasMoreTokens()) {
-      this.activePlayer.activeToken.drawHTMLToken();
-      this.ready = true;
-    } else {
-      this.gameOver(`It's a draw!`);
-    }
+
 
 
   }
