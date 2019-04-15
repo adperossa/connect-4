@@ -59,8 +59,7 @@ class Game {
     let spaces = this.board.spaces;
     let activeToken = this.activePlayer.activeToken;
     let targetColumn = spaces[activeToken.columnLocation];
-    let game = this;
-
+   
     const lastRow = this.board.rows - 1
 
     for (let row = lastRow; row >= 0; row--) {
@@ -69,8 +68,8 @@ class Game {
 
       if (space.token === null) {
         this.ready = false;
-        this.activePlayer.activeToken.drop(space, function () {
-          game.updateGameState(activeToken, space);
+        activeToken.drop(space, () => {
+          this.updateGameState(activeToken, space);
         });
       }
 
