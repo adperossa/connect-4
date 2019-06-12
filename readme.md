@@ -1,6 +1,7 @@
 ## Connect  4
 Or Four in a row, as it's also called. I did this as a practice workshop after taking the Object-Oriented JavaScript course, and really liked it. Had a lot of hair-pulling moments as well. It takes a while and quite a few cups of coffee/tea to rewire your brain into tackling and solving problems in a different way.
-![Screenshot of the game after a few moves](docs/pic1.png)
+
+![](docs/pic1.png)
 
 ### How it works
 It's structured around five classes: Game, Board, Player, Space and Token; and the board is drawn with SVG.
